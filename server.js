@@ -1,10 +1,11 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server");
 const dotenv = require("dotenv");
-const connectDB = require("./config/db");
 const colors = require("colors");
-// const typeDefs = require("./typeDefs");
-// const resolvers = require("./resolvers");
+const connectDB = require("./config/db");
+
+const typeDefs = null;
+const resolvers = null;
 
 // Load environment variables
 dotenv.config({ path: "./config/.env" });
@@ -12,11 +13,18 @@ dotenv.config({ path: "./config/.env" });
 // Connect to the database
 connectDB();
 
+// Start the server
+const app = express();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers
 });
 
-server.listen().then(({ url }) => {
-  console.log(`Server is listening on: ${url}`.yellow.bold);
+server.applyMiddleware({ app });
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`.yellow.bold);
 });
