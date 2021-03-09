@@ -1,0 +1,23 @@
+{
+  "name": "graphql-ninja",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "Andrew Hearse <andy@claroh.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "apollo-server": "^2.21.0",
+    "apollo-server-express": "^2.21.0",
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "mongoose": "^5.11.19"
+  }
+}
