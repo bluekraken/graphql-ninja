@@ -19,12 +19,15 @@ const typeDefs = gql`
   type User {
     id: ID!
     name: String!
+    cars: [Car]
   }
 
   type Car {
+    id: ID!
     make: String!
     model: String!
     colour: String!
+    ownedBy: User!
   }
 `;
 
@@ -35,6 +38,14 @@ const resolvers = {
     me: () => me,
     cars: () => cars,
     car: (parent, { id }) => cars.find((car) => car.id === id)
+  },
+  Car: {
+    ownedBy: (parent) => users.find((user) => user.id === parent.ownedBy)
+  },
+  User: {
+    cars: (parent) => {
+      return parent.cars ? cars.filter((car) => parent.cars.includes(car.id)) : undefined;
+    }
   }
 };
 
