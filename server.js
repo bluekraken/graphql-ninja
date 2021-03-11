@@ -5,8 +5,6 @@ const colors = require("colors");
 const connectDB = require("./config/db");
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
-let users = require("./data/users");
-let cars = require("./data/cars");
 
 // Load environment variables
 dotenv.config({ path: "./config/.env" });
@@ -19,11 +17,7 @@ const app = express();
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
-  context: {
-    users,
-    cars
-  }
+  resolvers
 });
 
 server.applyMiddleware({ app });

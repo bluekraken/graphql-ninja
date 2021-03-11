@@ -1,32 +1,38 @@
+const User = require("../models/User");
+const Car = require("../models/Car");
+const isValidObjectId = require("../utils/isValidObjectId");
+
 const resolvers = {
   Query: {
-    users: (parent, args, { users }) => users,
-    user: (parent, { id }, { users }) => users.find((user) => user.id === id),
-    me: (parent, args, { users }) => users[0]
+    users: async (parent, args) => {
+      const users = await User.find();
+      return users;
+    },
+    user: async (parent, { _id }) => {
+      const user = isValidObjectId(_id) ? await User.findById(_id) : null;
+      return user;
+    }
   },
   Mutation: {
-    createUser: (parent, { id, name }, { users }) => {
-      const user = {
-        id,
-        name
-      };
-      users.push(user);
+    createUser: async (parent, { name }, { users }) => {
+      const user = await User.create({ name });
       return user;
     },
-    deleteUser: (parent, { id }, { users }) => {
-      let found = false;
-      users = users.filter((user) => {
-        if (user.id === id) {
-          found = true;
-        } else {
-          return true;
-        }
-      });
-      return found;
+    deleteUser: async (parent, { _id }) => {
+      const user = isValidObjectId(_id) ? await User.findById(_id) : false;
+
+      if (user) {
+        await user.remove();
+      }
+
+      return !!user;
     }
   },
   User: {
-    cars: (parent, args, { cars }) => cars.filter((car) => car.ownedBy === parent.id)
+    cars: async (parent) => {
+      const cars = Car.find({ owner: parent._id });
+      return cars;
+    }
   }
 };
 

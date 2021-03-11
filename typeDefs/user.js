@@ -3,17 +3,17 @@ const { gql } = require("apollo-server-express");
 module.exports = gql`
   extend type Query {
     users: [User]
-    user(id: ID!): User
+    user(_id: ID!): User
     me: User
   }
 
   extend type Mutation {
-    createUser(id: ID!, name: String!): User!
-    deleteUser(id: ID!): Boolean
+    createUser(name: String!): User
+    deleteUser(_id: ID!): Boolean
   }
 
   type User {
-    id: ID!
+    _id: ID!
     name: String!
     cars: [Car]
   }

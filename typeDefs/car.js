@@ -3,19 +3,19 @@ const { gql } = require("apollo-server-express");
 module.exports = gql`
   extend type Query {
     cars: [Car]
-    car(id: ID!): Car
+    car(_id: ID!): Car
   }
 
   extend type Mutation {
-    createCar(id: ID!, make: String!, model: String!, colour: String!, ownedBy: ID!): Car!
-    deleteCar(id: ID!): Boolean
+    createCar(make: String!, model: String!, colour: String!, owner: ID!): Car
+    deleteCar(_id: ID!): Boolean
   }
 
   type Car {
-    id: ID!
+    _id: ID!
     make: String!
     model: String!
     colour: String!
-    ownedBy: User!
+    owner: User!
   }
 `;
