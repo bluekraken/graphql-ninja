@@ -4,7 +4,7 @@ const isValidObjectId = require("../utils/isValidObjectId");
 
 const resolvers = {
   Query: {
-    users: async (parent, args) => {
+    users: async () => {
       const users = await User.find();
       return users;
     },
@@ -14,7 +14,7 @@ const resolvers = {
     }
   },
   Mutation: {
-    createUser: async (parent, { name }, { users }) => {
+    createUser: async (parent, { name }) => {
       const user = await User.create({ name });
       return user;
     },

@@ -15,6 +15,12 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
+// Cascade delete cars owned by the user
+UserSchema.pre("remove", async function (next) {
+  await this.model("Car").deleteMany({ owner: this._id });
+  next();
+});
+
 // Hash the plain text password before saving
 // UserSchema.pre("save", async function (next) {
 //   if (this.isModified("password")) {

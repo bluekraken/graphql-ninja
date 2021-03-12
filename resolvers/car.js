@@ -4,7 +4,7 @@ const isValidObjectId = require("../utils/isValidObjectId");
 
 const resolvers = {
   Query: {
-    cars: async (parent, args) => {
+    cars: async () => {
       const cars = await Car.find();
       return cars;
     },
@@ -32,7 +32,7 @@ const resolvers = {
     }
   },
   Car: {
-    owner: async (parent, args) => {
+    owner: async (parent) => {
       const user = await User.findById(parent.owner);
       return user;
     }
